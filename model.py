@@ -1,6 +1,6 @@
 import math
 
-from card_utils import Card
+from card_utils import Card, evaluate
 from game_state import GameStateView
 from player_action import PlayerAction
 
@@ -504,7 +504,8 @@ class Model:
         stack_after = my_stack - call
         if gs.can_raise and stack_after > 0:
             rthr = self.params["post_raise_thr"] + (0.04 if street == "river" else 0.0)
-            if e > rthr:
+            # v5: never raise a bet with less than two pair (audit #3)
+            if e > rthr and evaluate(list(self.hand) + list(gs.board))[0] >= 2:
                 total = gs.current_bet * 3
                 if stack_after < 1.5 * (pot + call):
                     total = gs.max_raise_to
