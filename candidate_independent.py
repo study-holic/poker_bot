@@ -444,11 +444,14 @@ class Model:
         window = self._opp_window()
         # Aggression filter: each postflop bet/raise by opponent removes weak hands.
         keep = 1.0
+        # Passive opponents' bets mean more: shrink their betting range harder.
+        tight = min(1.0, max(0.0, (0.3 - aggr) / 0.2))
+        bet_keep = 0.6 - 0.25 * tight
         prev = None
         for (s, pid, kind, amt) in h["log"]:
             if s > 0 and pid == opp:
                 if kind == "raise":
-                    keep *= 0.6
+                    keep *= bet_keep
                 elif kind == "call" and prev is not None and prev[0] == s and prev[2] == "raise":
                     keep *= 0.85  # called a bet (not a check)
             prev = (s, pid, kind)
