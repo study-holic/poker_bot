@@ -1,0 +1,1 @@
+candidate,commit_sha,opponent,seed_or_repeat,deals_arg,paired_units,bb_per_100,ci_95_low,ci_95_high,faults,illegal_moves,timeouts,max_decision_ms,elapsed_s,notes
