@@ -198,7 +198,7 @@ class Model:
             return 0.65, 0.65, 0.12, 0.2, 0.5, 0.35
         w_open = _shrink(st["btn_raise"], st["btn_n"], 0.65, 8)
         w_def = _shrink(st["vs_open_n"] - st["vs_open_fold"], st["vs_open_n"], 0.65, 8)
-        w_3b = _shrink(st["vs_open_raise"], st["vs_open_n"], 0.12, 8)
+        w_3b = _shrink(st["vs_open_raise"], st["vs_open_n"], 0.18, 8)
         w_shove = _shrink(st["pf_shove"], st["hands"], 0.12, 10)
         if st["sd_aggr_n"] >= 2:
             mean = st["sd_aggr_pct"] / st["sd_aggr_n"]
@@ -444,14 +444,14 @@ class Model:
         window = self._opp_window()
         # Aggression filter: each postflop bet/raise by opponent removes weak hands.
         keep = 1.0
-        last_s = None
+        prev = None
         for (s, pid, kind, amt) in h["log"]:
-            if s == 0 or pid != opp:
-                continue
-            if kind == "raise":
-                keep *= 0.6
-            elif kind == "call":
-                keep *= 0.85
+            if s > 0 and pid == opp:
+                if kind == "raise":
+                    keep *= 0.6
+                elif kind == "call" and prev is not None and prev[0] == s and prev[2] == "raise":
+                    keep *= 0.85  # called a bet (not a check)
+            prev = (s, pid, kind)
         # Size of current bet facing us relative to pot.
         call = gs.call_amount
         pot = gs.pot
@@ -463,7 +463,7 @@ class Model:
         mania = min(1.0, max(0.0, (aggr - 0.35) / 0.4))
         keep = 1.0 - (1.0 - keep) * (1.0 - mania)
         keep = max(0.15, min(1.0, keep))
-        eq = self._equity(window, board, keep, 300, rng)
+        eq = self._equity(window, board, keep, 500, rng)
 
         my_stack = gs.stacks[me]
         opp_stack = gs.stacks[opp] + gs.bets[opp] - gs.bets[me]
