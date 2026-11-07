@@ -1,0 +1,12 @@
+model,opponent,deals,seed,bb100,ci95,se,verdict,hands,faults,slowest_s,wall_s,first_fault
+model:Model,tight,100,11,87.0,39.1,19.948979591836736,ahead,200,0,0.23,19.9,
+model:Model,equity,100,11,140.2,85.9,43.8265306122449,ahead,200,0,0.44,109.1,
+model:Model,call,100,11,443.0,139.5,71.1734693877551,ahead,200,0,0.69,58.1,
+model:Model,shove,100,11,122.0,173.5,88.5204081632653,unclear,200,0,0.11,15.1,
+model:Model,random,100,11,136.6,108.7,55.45918367346939,ahead,200,0,0.45,31.3,
+model:Model,adv_station,100,11,396.1,141.9,72.39795918367348,ahead,200,0,0.41,61.2,
+model:Model,adv_maniac,100,11,171.3,143.6,73.26530612244898,ahead,200,0,0.91,49.8,
+model:Model,adv_jammer,100,11,6.0,92.7,47.29591836734694,unclear,200,0,0.24,24.7,
+model:Model,adv_nit3bet,100,11,34.2,55.9,28.520408163265305,unclear,200,0,0.24,32.5,
+model:Model,adv_smallball,100,11,111.8,72.3,36.88775510204081,ahead,200,0,0.54,37.6,
+model:Model,v4,100,11,0.0,0.0,0.0,unclear,200,0,0.51,73.2,
